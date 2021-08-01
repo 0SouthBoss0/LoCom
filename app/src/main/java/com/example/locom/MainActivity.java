@@ -23,6 +23,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -42,15 +43,21 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
+            Fragment fragment = new MapFragment();
             switch (item.getItemId()) {
 
                 case R.id.navigationMyProfile:
                     return true;
                 case R.id.navigationMyCourses:
+
                     setContentView(R.layout.mapslaynav);
 
 
+                    SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.framelay, fragment)
+                            .commit();
 
 
                     return true;

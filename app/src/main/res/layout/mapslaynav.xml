@@ -3,12 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/suda"
     android:layout_height="match_parent"
     tools:context="com.example.locom.MainActivity">
 
-    <include
-        layout="@layout/maps_layout" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/framelay">
 
+<!--    <include-->
+<!--        layout="@layout/maps_layout" />-->
+    </FrameLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
