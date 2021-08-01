@@ -1,5 +1,7 @@
 package com.example.locom;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -24,10 +27,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 
-
-
-
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,9 +35,10 @@ public class MainActivity extends AppCompatActivity
     private static final int MODE_LIGHT = 1;
 
 
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        //центральная навигация
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -67,9 +67,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
 
-
         //startActivity(new Intent(this, LoginActivity.class));
-
 
 
         setDarkMode(getWindow());
