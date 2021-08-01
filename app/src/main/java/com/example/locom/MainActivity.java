@@ -44,11 +44,18 @@ public class MainActivity extends AppCompatActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment;
             switch (item.getItemId()) {
+
                 case R.id.navigationMyProfile:
                     return true;
                 case R.id.navigationMyCourses:
+                    setContentView(R.layout.mapslaynav);
+
+
+
+
                     return true;
                 case R.id.navigationHome:
+
                     return true;
                 case R.id.navigationSearch:
                     return true;
