@@ -3,6 +3,7 @@ package com.example.locom;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,10 +20,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -30,11 +35,11 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    SupportMapFragment mapFragment;
     private BottomNavigationView bottomNavigationView;
     private static final int MODE_DARK = 0;
     private static final int MODE_LIGHT = 1;
-
+    FusedLocationProviderClient client;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,11 +54,10 @@ public class MainActivity extends AppCompatActivity
                 case R.id.navigationMyProfile:
                     return true;
                 case R.id.navigationMyCourses:
-
                     setContentView(R.layout.mapslaynav);
 
 
-                    SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+                    mapFragment = SupportMapFragment.newInstance();
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.framelay, fragment)
@@ -79,6 +83,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+            }, 100);
+        }
 
 
         //startActivity(new Intent(this, LoginActivity.class));

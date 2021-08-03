@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 
 android {
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.appsnipp.modernlogin"
@@ -42,5 +43,4 @@ dependencies {
     implementation "androidx.fragment:fragment:1.2.5"
 // Utilities for Maps SDK for Android (requires Google Play Services)
     implementation 'com.google.android.gms:play-services:12.0.1'
-
 }
