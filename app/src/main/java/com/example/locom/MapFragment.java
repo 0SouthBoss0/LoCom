@@ -6,7 +6,9 @@ import static android.content.Context.LOCATION_SERVICE;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -28,7 +30,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,20 +50,23 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
 
 public class MapFragment extends Fragment {
     Context thiscontext;
-
+    int which;
     protected Activity mActivity;
-
+    volatile boolean someBoolean;
     LocationManager locationManager;
-
+    LatLng posOfDragg;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -82,6 +90,22 @@ public class MapFragment extends Fragment {
                              Bundle savedInstanceState) {
         thiscontext = container.getContext();
 //        getLocation();
+        which=0;
+        final String[] optionMenu = {"Происшествие", "Геолокационный чат", "Знакомства"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(thiscontext, android.R.layout.select_dialog_item, optionMenu);
+        AlertDialog.Builder builder = new AlertDialog.Builder(thiscontext);
+        builder.setTitle("Выберите тип метки");
+
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+//                setWhich(which + 1);
+                Log.e("myApp", Integer.toString(which));
+
+            }
+        });
+        final AlertDialog a = builder.create();
+
 
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
@@ -133,19 +157,21 @@ public class MapFragment extends Fragment {
 
                         // Setting the position for the marker
                         markerOptions.position(latLng);
-
+    posOfDragg=latLng;
                         // Setting the title for the marker.
                         // This will be displayed on taping the marker
                         markerOptions.title(latLng.latitude + " : " + latLng.longitude);
 
                         // Clears the previously touched position
-                        //googleMap.clear();
+                        googleMap.clear();
+
 
                         // Animating to the touched position
                         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
                         // Placing a marker on the touched position
-                        googleMap.addMarker(markerOptions);
+                        googleMap.addMarker(markerOptions)
+                                .setDraggable(true);
 
 //                        if (isGPSCatched()) {
 //                            Log.w("myApp", "Маркёр готов");
@@ -161,10 +187,56 @@ public class MapFragment extends Fragment {
                     }
 
                 });
+//                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                    @Override
+//                    public boolean onMarkerClick(Marker marker) {
+//
+//                        return false;
+//                    }
+//                });
+
+                googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+
+
+                    @Override
+                    public void onMarkerDragStart(Marker marker) {
+
+
+                        BitmapDescriptor iconBlue = BitmapDescriptorFactory.fromResource(R.drawable.blue_dot);
+                        BitmapDescriptor iconGreen = BitmapDescriptorFactory.fromResource(R.drawable.green_dot);
+                        Log.e("myApp", "вы кликнули");
+
+                        a.show();
+//
+//                        switch (getWhich()) {
+//                            case 1:
+//                                //qqc
+//                            case 2:
+//                                marker.setIcon(iconBlue);
+//                            case 3:
+//                                marker.setIcon(iconGreen);
+//
+//
+//                        }
+                    }
+
+                    @Override
+                    public void onMarkerDragEnd(Marker marker) {
+                        marker.setPosition(posOfDragg);
+                        // TODO Auto-generated method stub
+
+                    }
+
+                    @Override
+                    public void onMarkerDrag(Marker marker) {
+                        marker.setPosition(posOfDragg);
+                        // TODO Auto-generated method stub
+
+                    }
+                });
 
             }
         });
-
         return view;
     }
 
@@ -203,7 +275,7 @@ public class MapFragment extends Fragment {
 //
 //    }
 
-//    @Override
+    //    @Override
 //    public void onLocationChanged(Location location) {
 //        Log.e("myApp", location.getLatitude() + "," + location.getLongitude());
 //
@@ -237,7 +309,14 @@ public class MapFragment extends Fragment {
 //    public void onProviderDisabled(String provider) {
 //
 //    }
+    public void setWhich(int which) {
+        this.which = which;
 
+    }
+
+    public int getWhich() {
+        return which;
+    }
 
 }
 

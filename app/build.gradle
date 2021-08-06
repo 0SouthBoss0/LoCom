@@ -19,6 +19,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 
@@ -43,4 +47,5 @@ dependencies {
     implementation "androidx.fragment:fragment:1.2.5"
 // Utilities for Maps SDK for Android (requires Google Play Services)
     implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation "com.orhanobut:hawk:2.0.1"
 }

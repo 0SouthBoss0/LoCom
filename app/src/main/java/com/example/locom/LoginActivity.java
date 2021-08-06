@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -21,9 +22,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
     public void onCliick(View view){
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "Пора покормить кота!", Toast.LENGTH_SHORT);
-        toast.show();
+        onBackPressed();
+
     }
     public void onLoginClick(View View) {
 
