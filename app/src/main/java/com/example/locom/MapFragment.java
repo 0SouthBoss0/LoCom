@@ -52,6 +52,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -150,7 +152,7 @@ public class MapFragment extends Fragment {
                         markerOptions.title(latLng.latitude + " : " + latLng.longitude);
 
                         // Clears the previously touched position
-                        googleMap.clear();
+                        //googleMap.clear();
 
 
                         // Animating to the touched position
@@ -191,8 +193,8 @@ public class MapFragment extends Fragment {
 
                         Log.e("myApp", "вы кликнули");
 
-                        showMarkerSet(googleMap, marker);
-
+                        // showMarkerSet(googleMap, marker);
+                        showMarker2(googleMap, marker);
 
                     }
 
@@ -229,6 +231,7 @@ public class MapFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(thiscontext);
         builder.setTitle("Выберите тип метки");
 
+
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
@@ -238,7 +241,6 @@ public class MapFragment extends Fragment {
                 switch (which) {
                     case 0:
                         marker.setIcon(iconRed);
-
                         break;
                     case 1:
                         marker.setIcon(iconBlue);
@@ -256,6 +258,79 @@ public class MapFragment extends Fragment {
         });
         final AlertDialog a = builder.create();
         a.show();
+    }
+
+    LinearLayout addview;
+    EditText nameMarker;
+    Button buttonFirst;
+    Button buttonSecond;
+    Button buttonThird;
+    int type;
+
+    private void showMarker2(GoogleMap googleMap, Marker marker) {
+        addview = (LinearLayout) getLayoutInflater()
+                .inflate(R.layout.mymenu, null);
+        nameMarker = addview.findViewById(R.id.etComments);
+        buttonFirst = addview.findViewById(R.id.button2);
+        buttonSecond = addview.findViewById(R.id.button3);
+        buttonThird = addview.findViewById(R.id.button4);
+
+        String textButton1 = (String) buttonFirst.getText();
+        String textButton2 = (String) buttonSecond.getText();
+        String textButton3 = (String) buttonThird.getText();
+
+        type = 0;
+        buttonFirst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonFirst.setText(textButton1 + " ✔");
+                buttonSecond.setText(textButton2);
+                buttonThird.setText(textButton3);
+                type = 1;
+            }
+        });
+        buttonSecond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonFirst.setText(textButton1);
+                buttonSecond.setText(textButton2 + " ✔");
+                buttonThird.setText(textButton3);
+                type = 2;
+            }
+        });
+        buttonThird.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonFirst.setText(textButton1);
+                buttonSecond.setText(textButton2);
+                buttonThird.setText(textButton3 + " ✔");
+                type = 3;
+            }
+        });
+        AlertDialog.Builder alert = new AlertDialog.Builder(thiscontext);
+        alert.setTitle("Создание новой метки");
+        alert.setView(addview);
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String nameforcurrentmarker = nameMarker.getText().toString();
+
+                marker.setTitle(nameforcurrentmarker);
+
+
+                Toast toast = Toast.makeText(thiscontext,
+                        "Метка успешно сохранена", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                googleMap.clear();
+            }
+        });
+        alert.show();
+
+
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {

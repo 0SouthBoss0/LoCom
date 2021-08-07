@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="top"
-        android:hint="Название метки"
+        android:hint="Введите название метки"
         android:inputType="textMultiLine"
         android:scrollbars="vertical" />
 
@@ -19,7 +19,7 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-            android:text="Происшествие" />
+        android:text="Происшествие" />
 
     <Button
         android:id="@+id/button3"
@@ -32,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Знакомства" />
-
 
 
 </LinearLayout>
