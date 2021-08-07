@@ -212,7 +212,17 @@ public class MapFragment extends Fragment {
 
                     }
                 });
+                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        enterChat(marker);
+                        marker.showInfoWindow();
+                        Log.e("myApp", "ПРОШЛО в чат");
+                        // TODO Auto-generated method stub
+
+                    }
+                });
             }
         });
         return view;
@@ -403,5 +413,8 @@ public class MapFragment extends Fragment {
         return which;
     }
 
+    private void enterChat(Marker marker) {
+        
+    }
 }
 
