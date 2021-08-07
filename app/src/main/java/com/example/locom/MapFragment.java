@@ -67,6 +67,7 @@ public class MapFragment extends Fragment {
     volatile boolean someBoolean;
     LocationManager locationManager;
     LatLng posOfDragg;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -90,21 +91,7 @@ public class MapFragment extends Fragment {
                              Bundle savedInstanceState) {
         thiscontext = container.getContext();
 //        getLocation();
-        which=0;
-        final String[] optionMenu = {"Происшествие", "Геолокационный чат", "Знакомства"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(thiscontext, android.R.layout.select_dialog_item, optionMenu);
-        AlertDialog.Builder builder = new AlertDialog.Builder(thiscontext);
-        builder.setTitle("Выберите тип метки");
-
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-//                setWhich(which + 1);
-                Log.e("myApp", Integer.toString(which));
-
-            }
-        });
-        final AlertDialog a = builder.create();
+        which = 0;
 
 
         View view = inflater.inflate(R.layout.fragment_map, container, false);
@@ -151,13 +138,13 @@ public class MapFragment extends Fragment {
                     @Override
                     public void onMapClick(LatLng latLng) {
 
-
+                        BitmapDescriptor iconRed = BitmapDescriptorFactory.fromResource(R.drawable.red_dot);
                         // Creating a marker
-                        MarkerOptions markerOptions = new MarkerOptions();
+                        MarkerOptions markerOptions = new MarkerOptions().icon(iconRed);
 
                         // Setting the position for the marker
                         markerOptions.position(latLng);
-    posOfDragg=latLng;
+                        posOfDragg = latLng;
                         // Setting the title for the marker.
                         // This will be displayed on taping the marker
                         markerOptions.title(latLng.latitude + " : " + latLng.longitude);
@@ -202,22 +189,11 @@ public class MapFragment extends Fragment {
                     public void onMarkerDragStart(Marker marker) {
 
 
-                        BitmapDescriptor iconBlue = BitmapDescriptorFactory.fromResource(R.drawable.blue_dot);
-                        BitmapDescriptor iconGreen = BitmapDescriptorFactory.fromResource(R.drawable.green_dot);
                         Log.e("myApp", "вы кликнули");
 
-                        a.show();
-//
-//                        switch (getWhich()) {
-//                            case 1:
-//                                //qqc
-//                            case 2:
-//                                marker.setIcon(iconBlue);
-//                            case 3:
-//                                marker.setIcon(iconGreen);
-//
-//
-//                        }
+                        showMarkerSet(googleMap, marker);
+
+
                     }
 
                     @Override
@@ -240,13 +216,47 @@ public class MapFragment extends Fragment {
         return view;
     }
 
-//    private boolean isGPSCatched() {
+    //    private boolean isGPSCatched() {
 //        if (lon != 0) {
 //            return true;
 //        }
 //
 //        return false;
 //    }
+    private void showMarkerSet(GoogleMap googleMap, Marker marker) {
+        final String[] optionMenu = {"Происшествие", "Геолокационный чат", "Знакомства"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(thiscontext, android.R.layout.select_dialog_item, optionMenu);
+        AlertDialog.Builder builder = new AlertDialog.Builder(thiscontext);
+        builder.setTitle("Выберите тип метки");
+
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                BitmapDescriptor iconBlue = BitmapDescriptorFactory.fromResource(R.drawable.blue_dot);
+                BitmapDescriptor iconGreen = BitmapDescriptorFactory.fromResource(R.drawable.green_dot);
+                BitmapDescriptor iconRed = BitmapDescriptorFactory.fromResource(R.drawable.red_dot);
+                switch (which) {
+                    case 0:
+                        marker.setIcon(iconRed);
+
+                        break;
+                    case 1:
+                        marker.setIcon(iconBlue);
+                        break;
+                    case 2:
+                        marker.setIcon(iconGreen);
+
+                        break;
+
+
+                }
+                Log.e("myApp", Integer.toString(which));
+
+            }
+        });
+        final AlertDialog a = builder.create();
+        a.show();
+    }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) thiscontext.getSystemService(Context.ACTIVITY_SERVICE);

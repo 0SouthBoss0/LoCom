@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity
                             .replace(R.id.framelay, fragment)
                             .commit();
 
-
                     return true;
                 case R.id.navigationHome:
 
