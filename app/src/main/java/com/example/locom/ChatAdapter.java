@@ -61,6 +61,7 @@ public class ChatAdapter extends BaseAdapter {
         }
 
         boolean myMsg = chatMessage.getIsme() ;//Just a dummy check
+        myMsg=!myMsg;
         //to simulate whether it me or other sender
         setAlignment(holder, myMsg);
         holder.txtMessage.setText(chatMessage.getMessage());

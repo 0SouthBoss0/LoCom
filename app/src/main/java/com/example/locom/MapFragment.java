@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.orhanobut.hawk.Hawk;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -70,6 +71,9 @@ public class MapFragment extends Fragment {
     LocationManager locationManager;
     LatLng posOfDragg;
 
+
+    String chatonClickname;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -95,7 +99,7 @@ public class MapFragment extends Fragment {
 //        getLocation();
         which = 0;
 
-
+        Hawk.init(thiscontext).build();
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         SupportMapFragment supportMapFragment = (SupportMapFragment)
@@ -149,7 +153,7 @@ public class MapFragment extends Fragment {
                         posOfDragg = latLng;
                         // Setting the title for the marker.
                         // This will be displayed on taping the marker
-                        markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+                        markerOptions.title("Новая метка");
 
                         // Clears the previously touched position
                         //googleMap.clear();
@@ -217,6 +221,7 @@ public class MapFragment extends Fragment {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
                         enterChat(marker);
+                        Hawk.put("chatName", marker.getTitle());
                         marker.showInfoWindow();
                         Log.e("myApp", "ПРОШЛО в чат");
                         // TODO Auto-generated method stub
@@ -416,5 +421,7 @@ public class MapFragment extends Fragment {
     private void enterChat(Marker marker) {
         startActivity(new Intent(thiscontext, ChatActivity.class));
     }
+
+
 }
 
