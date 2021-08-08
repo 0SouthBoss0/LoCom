@@ -414,7 +414,7 @@ public class MapFragment extends Fragment {
     }
 
     private void enterChat(Marker marker) {
-        
+        startActivity(new Intent(thiscontext, ChatActivity.class));
     }
 }
 

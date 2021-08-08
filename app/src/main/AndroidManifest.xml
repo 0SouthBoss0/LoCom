@@ -47,7 +47,7 @@
             android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Test"
+            android:name=".ChatActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- android:windowSoftInputMode="adjustPan" -->
 

@@ -3,10 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/LoCom/app/src/main/res/layout/activity_chat.xml" value="0.25815217391304346" />
         <entry key="..\:/LoCom/app/src/main/res/layout/activity_login.xml" value="0.17592592592592593" />
         <entry key="..\:/LoCom/app/src/main/res/layout/activity_register.xml" value="0.17592592592592593" />
         <entry key="..\:/LoCom/app/src/main/res/layout/customalert.xml" value="0.1726851851851852" />
+        <entry key="..\:/LoCom/app/src/main/res/layout/fd.xml" value="0.2015625" />
         <entry key="..\:/LoCom/app/src/main/res/layout/fragment_map.xml" value="0.1824074074074074" />
+        <entry key="..\:/LoCom/app/src/main/res/layout/list_item_chat_message.xml" value="0.20520833333333333" />
         <entry key="..\:/LoCom/app/src/main/res/layout/maps_layout.xml" value="0.1824074074074074" />
         <entry key="..\:/LoCom/app/src/main/res/layout/mapslaynav.xml" value="0.17916666666666667" />
         <entry key="..\:/LoCom/app/src/main/res/layout/mymenu.xml" value="0.17592592592592593" />
